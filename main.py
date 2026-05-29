@@ -1,23 +1,25 @@
-from fastapi import FastAPI
+from fastapi import Body, FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
 
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: bool | None = None
+class Post(BaseModel):
+    title: str
+    content: str
+
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/posts")
+def read_item():
+    return {"posts":"This is my post"}
 
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
+@app.post("/createPost")
+def create_post(new_post: Post):
+
+    print(new_post)
+    return {"data ": "new post"}
