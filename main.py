@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import Body, FastAPI
 from pydantic import BaseModel
 
@@ -7,7 +9,18 @@ app = FastAPI()
 class Post(BaseModel):
     title: str
     content: str
+    published: bool = True
+    rating : Optional[int] = None
 
+
+my_posts = [
+            {"title": "post of posts 1", "content": "content of posts 1", "id": 1},
+            
+            {"title":"title of titles", "content":"contents of contents", "id":1},
+
+            {"title":"title of titles 2", "content":"contents of contents 2", "id":2},
+            
+            ]
 
 @app.get("/")
 def read_root():
@@ -16,10 +29,12 @@ def read_root():
 
 @app.get("/posts")
 def read_item():
-    return {"posts":"This is my post"}
+    return {"data":my_posts}
 
-@app.post("/createPost")
-def create_post(new_post: Post):
+@app.post("/posts")
+def create_post(post: Post):
 
-    print(new_post)
-    return {"data ": "new post"}
+    print(post)
+    # printing as a dict
+    print(post.dict)
+    return {"data ": "post"}
