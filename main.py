@@ -36,6 +36,7 @@ def read_item():
 def create_post(post: Post):
 
     post_dict = post.model_dump()
+    # model_dump()  also the same as dict()
     post_dict ['id'] = randrange(0, 1000000)
 
     my_posts.append(post_dict)
