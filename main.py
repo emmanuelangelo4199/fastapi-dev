@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from random import randrange
 
 app = FastAPI()
@@ -16,11 +16,11 @@ class Post(BaseModel):
 
 
 my_posts = [
-            {"Title": "post of posts 1", "content": "content of posts 1", "id": 1},
-            {"Title":"title of titles 2", "content":"contents of contents 2", "id":2},
-            {"Title":"title of titles", "content":"contents of contents", "id":3},
-            
-            ]
+    {"title": "post of posts 1", "content": "content of posts 1", "id": 1},
+    {"title": "title of titles 2", "content": "contents of contents 2", "id": 2},
+    {"title": "title of titles", "content": "contents of contents", "id": 3},
+    {"title": "cast of the old war", "content": "begotten souls, devahoured by cats", "id": 4}
+]
 
 # not the best way!!!!
 def find_post(id):
