@@ -18,7 +18,7 @@ class Post(BaseModel):
 my_posts = [
     {"title": "post of posts 1", "content": "content of posts 1", "id": 1},
     {"title": "title of titles 2", "content": "contents of contents 2", "id": 2},
-    {"title": "title of titles", "content": "contents of contents", "id": 3},
+    {"title": "too old to die", "content": "Lost souls of the forgotten", "id": 3},
     {"title": "cast of the old war", "content": "begotten souls, devahoured by cats", "id": 4}
 ]
 
@@ -77,8 +77,20 @@ def delete_post(id:int):
     index = find_index_post(id)
 
     if index == None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= f"post with id: {id} was not found.")
-
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= f"post with id: {id} does not exist.")
 
     my_posts.pop(index)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.put("/posts/{id}")
+def update_post(id: int, post: Post):
+    index = find_index_post(id)
+
+    if index == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id: {id} does not exist.")
+
+    post_dict = post.dict() # the dict() 
+    post_dict['id'] = id  #converting the Post data recevied from the frontend and converting it to a regular python dictionary
+    my_posts[index] = post_dict # replacing the my_posts within the index with the post_dict
+    return {"data": post_dict}
